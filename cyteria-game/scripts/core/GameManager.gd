@@ -7,7 +7,7 @@ signal game_resumed
 signal player_died
 
 var current_level: Node2D
-var player: Player
+var player: CharacterBody2D
 var is_paused: bool = false
 
 func _ready():

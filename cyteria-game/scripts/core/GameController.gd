@@ -1,17 +1,18 @@
 extends Node
 
-var player: Player
-var health_bar: HealthBar
+var player: CharacterBody2D
+var health_bar: Control
 
 func _ready():
 	# Find player and UI elements
 	await get_tree().process_frame  # Wait one frame for nodes to be ready
 	
 	player = get_tree().get_first_node_in_group("player")
-	health_bar = get_tree().get_nodes_in_group("ui_healthbar")[0] if get_tree().get_nodes_in_group("ui_healthbar").size() > 0 else null
+	var health_bars = get_tree().get_nodes_in_group("ui_healthbar")
+	health_bar = health_bars[0] if health_bars.size() > 0 else null
 	
 	if not health_bar:
-		health_bar = find_node_by_type(get_tree().root, HealthBar)
+		health_bar = find_node_by_type(get_tree().root, "HealthBar.gd")
 	
 	if player and health_bar:
 		# Connect player health to UI
@@ -19,12 +20,12 @@ func _ready():
 		# Set initial health
 		health_bar.set_health(player.health_system.current_health, player.health_system.max_health)
 
-func find_node_by_type(node: Node, type) -> Node:
-	if node is type:
+func find_node_by_type(node: Node, script_path: String) -> Node:
+	if node.get_script() and str(node.get_script().resource_path).ends_with(script_path):
 		return node
 	
 	for child in node.get_children():
-		var result = find_node_by_type(child, type)
+		var result = find_node_by_type(child, script_path)
 		if result:
 			return result
 	

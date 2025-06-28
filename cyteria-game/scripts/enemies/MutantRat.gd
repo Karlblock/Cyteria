@@ -6,7 +6,7 @@ const CHASE_RANGE = 200.0
 const ATTACK_RANGE = 50.0
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-var player: Player
+var player: CharacterBody2D
 var state = "idle"  # idle, chasing, attacking, dead
 var facing_right = true
 
