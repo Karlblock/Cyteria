@@ -1,8 +1,8 @@
 extends Node
-class_name GameConfig
 
 # Singleton for game configuration
 # Access via GameConfig.get_value("category", "key")
+# This script is loaded as an autoload, no class_name needed
 
 const CONFIG = {
 	# Player Configuration
