@@ -109,7 +109,10 @@ func _on_died():
 	state = "dead"
 	print("Rat died!")
 	# Disable collision
-	set_collision_layer_value(3, false)  # Remove from enemies layer
+	if has_method("set_collision_layer_value"):
+		set_collision_layer_value(3, false)  # Remove from enemies layer
+	else:
+		collision_layer = 0  # Désactive toutes les collisions
 	
 	# TODO: Drop loot
 	# TODO: Add death animation

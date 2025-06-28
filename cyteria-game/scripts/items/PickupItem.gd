@@ -42,7 +42,11 @@ func try_pickup():
 		if nearby_player.pickup_item(parent_item):
 			# Cache l'item du monde
 			parent_item.visible = false
-			parent_item.set_collision_layer_value(5, false)  # Remove from pickup layer
+			# Désactive les collisions
+			if self.has_method("set_collision_layer_value"):
+				self.set_collision_layer_value(5, false)  # Remove from pickup layer
+			else:
+				self.collision_layer = 0  # Désactive toutes les collisions
 			
 			# Feedback visuel
 			show_pickup_effect()

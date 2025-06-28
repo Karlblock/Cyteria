@@ -150,7 +150,10 @@ func _on_died():
 	print("Security drone destroyed!")
 	
 	# Disable collision et tombe
-	set_collision_layer_value(3, false)
+	if has_method("set_collision_layer_value"):
+		set_collision_layer_value(3, false)
+	else:
+		collision_layer = 0
 	
 	# Explosion effect
 	if sprite:
