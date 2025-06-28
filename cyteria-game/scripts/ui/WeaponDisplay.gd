@@ -19,17 +19,30 @@ func _on_weapon_equipped(weapon: Node):
 	update_display()
 
 func update_display():
-	if not current_weapon or not current_weapon.has_method("get"):
+	if not current_weapon:
 		weapon_name_label.text = "No Weapon"
 		weapon_stats_label.text = ""
 		weapon_icon.color = Color.GRAY
 		return
 	
-	var weapon_name = current_weapon.get("weapon_name", "Unknown")
-	var damage = current_weapon.get("damage", 0)
-	var attack_speed = current_weapon.get("attack_speed", 1.0)
-	var range = current_weapon.get("range", 0)
-	var rarity = current_weapon.get("rarity", "common")
+	# Safe property access
+	var weapon_name = "Unknown"
+	var damage = 0
+	var attack_speed = 1.0
+	var range = 0.0
+	var rarity = "common"
+	
+	if current_weapon.has_method("get"):
+		if "weapon_name" in current_weapon:
+			weapon_name = current_weapon.get("weapon_name")
+		if "damage" in current_weapon:
+			damage = current_weapon.get("damage")
+		if "attack_speed" in current_weapon:
+			attack_speed = current_weapon.get("attack_speed")
+		if "range" in current_weapon:
+			range = current_weapon.get("range")
+		if "rarity" in current_weapon:
+			rarity = current_weapon.get("rarity")
 	
 	weapon_name_label.text = weapon_name
 	weapon_stats_label.text = "DMG: %d | SPD: %.1f | RNG: %.0f" % [

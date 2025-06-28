@@ -34,15 +34,17 @@ func equip_weapon(weapon: Node) -> bool:
 		return false
 	
 	# Déséquipe l'arme actuelle
-	if equipped_weapon:
-		equipped_weapon.is_equipped = false
+	if equipped_weapon and equipped_weapon.has_method("set"):
+		equipped_weapon.set("is_equipped", false)
 	
 	# Équipe la nouvelle arme
 	equipped_weapon = weapon
-	weapon.is_equipped = true
+	if weapon.has_method("set"):
+		weapon.set("is_equipped", true)
 	item_equipped.emit(weapon)
 	
-	print("Equipped weapon: ", weapon.weapon_name)
+	var weapon_name = weapon.get("weapon_name") if weapon.has_method("get") else "Unknown"
+	print("Equipped weapon: ", weapon_name)
 	return true
 
 func get_equipped_weapon() -> Node:
@@ -51,7 +53,7 @@ func get_equipped_weapon() -> Node:
 func get_items_by_type(type: String) -> Array:
 	var filtered = []
 	for item in items:
-		if item.has_method("get") and item.get("weapon_type", "") == type:
+		if item.has_method("get") and item.get("weapon_type") == type:
 			filtered.append(item)
 	return filtered
 
