@@ -14,6 +14,8 @@ var is_dead = false
 @onready var collision = $CollisionShape2D
 @onready var health_system = $HealthSystem
 @onready var combat_system = $CombatSystem
+@onready var inventory = $InventorySystem
+@onready var weapon_mount = $WeaponMount
 
 func _ready():
 	add_to_group("player")
@@ -26,6 +28,13 @@ func _ready():
 	# Connect combat system signals
 	if combat_system:
 		combat_system.attack_performed.connect(_on_attack_performed)
+	
+	# Connect inventory signals
+	if inventory:
+		inventory.item_equipped.connect(_on_weapon_equipped)
+	
+	# Équipe une arme de base
+	equip_default_weapon()
 
 func _physics_process(delta):
 	if is_dead:
@@ -80,8 +89,13 @@ func handle_animation():
 				pass
 
 func handle_combat():
-	if Input.is_action_just_pressed("attack") and combat_system:
-		combat_system.try_attack()
+	if Input.is_action_just_pressed("attack"):
+		# Essaie d'attaquer avec l'arme équipée
+		var weapon = inventory.get_equipped_weapon() if inventory else null
+		if weapon and weapon.try_attack():
+			pass  # L'arme gère l'attaque
+		elif combat_system:
+			combat_system.try_attack()  # Fallback sur attaque de base
 
 func take_damage(amount: int):
 	if health_system:
@@ -106,3 +120,27 @@ func respawn():
 	is_dead = false
 	if health_system:
 		health_system.revive()
+
+func equip_default_weapon():
+	# Crée une arme de base par défaut
+	var default_weapon = preload("res://scenes/items/RustyPipe.tscn").instantiate()
+	weapon_mount.add_child(default_weapon)
+	if inventory:
+		inventory.add_item(default_weapon)
+		inventory.equip_weapon(default_weapon)
+
+func _on_weapon_equipped(weapon: Weapon):
+	# Déplace l'arme vers le mount point
+	if weapon.get_parent():
+		weapon.get_parent().remove_child(weapon)
+	weapon_mount.add_child(weapon)
+	weapon.position = Vector2.ZERO
+	print("Weapon equipped: ", weapon.weapon_name)
+
+func pickup_item(item: Node):
+	if inventory and inventory.add_item(item):
+		# Si c'est une arme et qu'on n'en a pas, l'équiper
+		if item is Weapon and not inventory.get_equipped_weapon():
+			inventory.equip_weapon(item)
+		return true
+	return false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="PackedScene" uid="uid://b4n5y7h8m2k4x" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/enemies/MutantRat.tscn" id="2_rat"]
@@ -7,6 +7,9 @@
 [ext_resource type="Script" path="res://scripts/core/TileMapGenerator.gd" id="5_generator"]
 [ext_resource type="Script" path="res://scripts/levels/MetroStationVisualizer.gd" id="6_visualizer"]
 [ext_resource type="Script" path="res://scripts/hazards/ToxicPool.gd" id="7_toxic"]
+[ext_resource type="PackedScene" path="res://scenes/enemies/SecurityDrone.tscn" id="8_drone"]
+[ext_resource type="PackedScene" path="res://scenes/items/ScrapPistol.tscn" id="9_pistol"]
+[ext_resource type="PackedScene" path="res://scenes/items/RustyPipe.tscn" id="10_pipe"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1"]
 texture_region_size = Vector2i(32, 32)
@@ -83,6 +86,12 @@ position = Vector2(1600, 600)
 [node name="MutantRat4" parent="Enemies" instance=ExtResource("2_rat")]
 position = Vector2(2000, 600)
 
+[node name="SecurityDrone1" parent="Enemies" instance=ExtResource("8_drone")]
+position = Vector2(1000, 300)
+
+[node name="SecurityDrone2" parent="Enemies" instance=ExtResource("8_drone")]
+position = Vector2(1800, 250)
+
 [node name="Hazards" type="Node2D" parent="."]
 
 [node name="ToxicPool1" type="Area2D" parent="Hazards"]
@@ -139,6 +148,17 @@ color = Color(0.4, 0.8, 0.4, 0.6)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hazards/ToxicPool2"]
 shape = SubResource("RectangleShape2D_toxic")
+
+[node name="Items" type="Node2D" parent="."]
+
+[node name="ScrapPistol" parent="Items" instance=ExtResource("9_pistol")]
+position = Vector2(900, 580)
+
+[node name="RustyPipe" parent="Items" instance=ExtResource("10_pipe")]
+position = Vector2(1300, 380)
+
+[node name="ScrapPistol2" parent="Items" instance=ExtResource("9_pistol")]
+position = Vector2(1700, 580)
 
 [node name="Lighting" type="CanvasModulate" parent="."]
 color = Color(0.3, 0.3, 0.35, 1)
