@@ -1,0 +1,18 @@
+{
+	"levels": [
+		{
+			"id": "metro_station",
+			"name": "Metro Station",
+			"scene_path": "res://scenes/levels/MetroStation.tscn",
+			"description": "Abandoned metro station with toxic hazards",
+			"difficulty": 1
+		},
+		{
+			"id": "combat_test",
+			"name": "Combat Test Arena",
+			"scene_path": "res://scenes/levels/CombatTestLevel.tscn",
+			"description": "Simple arena for testing combat mechanics",
+			"difficulty": 0
+		}
+	]
+}
