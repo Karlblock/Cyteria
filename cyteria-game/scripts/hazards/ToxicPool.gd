@@ -8,11 +8,14 @@ var players_in_pool: Array = []
 var damage_timers: Dictionary = {}
 
 @onready var visual = $Visual
-@onready var bubbles = $Bubbles
+var bubbles: Node
 
 func _ready():
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
+	
+	# Find bubbles node if it exists
+	bubbles = get_node_or_null("Bubbles")
 	
 	# Animate bubbles
 	if bubbles:
