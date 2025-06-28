@@ -8,7 +8,7 @@ signal inventory_full()
 
 @export var max_slots: int = 20
 var items: Array[Node] = []
-var equipped_weapon: Weapon = null
+var equipped_weapon: Node = null
 
 func add_item(item: Node) -> bool:
 	if items.size() >= max_slots:
@@ -29,7 +29,7 @@ func remove_item(item: Node) -> bool:
 	item_removed.emit(item)
 	return true
 
-func equip_weapon(weapon: Weapon) -> bool:
+func equip_weapon(weapon: Node) -> bool:
 	if not weapon:
 		return false
 	
@@ -45,7 +45,7 @@ func equip_weapon(weapon: Weapon) -> bool:
 	print("Equipped weapon: ", weapon.weapon_name)
 	return true
 
-func get_equipped_weapon() -> Weapon:
+func get_equipped_weapon() -> Node:
 	return equipped_weapon
 
 func get_items_by_type(type: String) -> Array:

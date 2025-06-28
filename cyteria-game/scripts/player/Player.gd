@@ -137,10 +137,10 @@ func _on_weapon_equipped(weapon: Weapon):
 	weapon.position = Vector2.ZERO
 	print("Weapon equipped: ", weapon.weapon_name)
 
-func pickup_item(item: Node):
+func pickup_item(item: Node) -> bool:
 	if inventory and inventory.add_item(item):
 		# Si c'est une arme et qu'on n'en a pas, l'équiper
-		if item is Weapon and not inventory.get_equipped_weapon():
+		if item.has_method("get") and item.get("weapon_type") and not inventory.get_equipped_weapon():
 			inventory.equip_weapon(item)
 		return true
 	return false

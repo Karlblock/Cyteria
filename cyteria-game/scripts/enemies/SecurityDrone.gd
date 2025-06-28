@@ -63,7 +63,7 @@ func handle_ai():
 	
 	match state:
 		"patrol":
-			if distance_to_player <= GameConfig.get_value("enemies", "security_drone", {}).get("detection_range", 200):
+			if distance_to_player <= 200:  # Detection range
 				state = "alert"
 			elif global_position.distance_to(patrol_target) < 50:
 				set_new_patrol_target()

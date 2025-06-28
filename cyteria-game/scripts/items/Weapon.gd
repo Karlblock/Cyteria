@@ -11,7 +11,7 @@ signal weapon_used(weapon: Weapon)
 @export var rarity: String = "common"  # common, rare, epic, legendary
 
 var is_equipped: bool = false
-var last_attack_time: float = 0.0
+var can_attack_flag: bool = true
 
 @onready var sprite = $Sprite2D
 @onready var attack_area = $AttackArea
@@ -27,15 +27,20 @@ func setup_weapon():
 			collision.shape.radius = range
 
 func can_attack() -> bool:
-	return Time.get_time_from_start() - last_attack_time >= (1.0 / attack_speed)
+	return can_attack_flag
 
 func try_attack() -> bool:
 	if not can_attack():
 		return false
 	
-	last_attack_time = Time.get_time_from_start()
+	can_attack_flag = false
 	perform_attack()
 	weapon_used.emit(self)
+	
+	# Start cooldown timer
+	var timer = get_tree().create_timer(1.0 / attack_speed)
+	timer.timeout.connect(func(): can_attack_flag = true)
+	
 	return true
 
 func perform_attack():
