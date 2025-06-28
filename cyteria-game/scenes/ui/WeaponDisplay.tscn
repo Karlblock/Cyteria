@@ -1,0 +1,57 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/WeaponDisplay.gd" id="1_weapon_display"]
+
+[node name="WeaponDisplay" type="Control"]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -250.0
+offset_top = -100.0
+offset_right = -20.0
+offset_bottom = -20.0
+script = ExtResource("1_weapon_display")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0, 0, 0, 0.7)
+
+[node name="WeaponIcon" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -20.0
+offset_right = 50.0
+offset_bottom = 20.0
+color = Color(0.8, 0.8, 0.8, 1)
+
+[node name="WeaponInfo" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = -25.0
+offset_right = -10.0
+offset_bottom = 25.0
+
+[node name="WeaponName" type="Label" parent="WeaponInfo"]
+layout_mode = 2
+text = "No Weapon"
+horizontal_alignment = 2
+
+[node name="WeaponStats" type="Label" parent="WeaponInfo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = ""
+horizontal_alignment = 2

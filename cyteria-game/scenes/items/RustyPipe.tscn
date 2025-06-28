@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/items/Weapon.gd" id="1_weapon"]
+[ext_resource type="Script" path="res://scripts/items/PickupItem.gd" id="2_pickup"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 60.0
@@ -36,6 +37,19 @@ shape = SubResource("CircleShape2D_1")
 [node name="PickupArea" type="Area2D" parent="."]
 collision_layer = 16
 collision_mask = 2
+script = ExtResource("2_pickup")
+pickup_text = "Press E for Rusty Pipe"
+auto_pickup = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
 shape = SubResource("RectangleShape2D_1")
+
+[node name="PickupPrompt" type="Label" parent="PickupArea"]
+offset_left = -40.0
+offset_top = -40.0
+offset_right = 40.0
+offset_bottom = -20.0
+theme_override_font_sizes/font_size = 10
+text = "Press E"
+horizontal_alignment = 1
+vertical_alignment = 1
